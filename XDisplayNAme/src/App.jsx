@@ -21,7 +21,7 @@ function App() {
 
   return (
     <div className="app-container">
-      <h1>User Information Form</h1>
+      <h1>Full Name Display</h1>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <label htmlFor="first-name">First Name:</label>
