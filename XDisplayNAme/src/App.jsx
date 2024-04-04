@@ -1,35 +1,58 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [fullName, setFullName] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [showError, setShowError] = useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (firstName.trim() !== '' && lastName.trim() !== '') {
+      setFullName(`${firstName} ${lastName}`);
+      setIsSubmitted(true);
+      setShowError(false);
+    } else {
+      setShowError(true);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="app-container">
+      <h1>User Information Form</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="input-group">
+          <label htmlFor="first-name">First Name:</label>
+          <input
+            type="text"
+            id="first-name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required // Marking field as required
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="last-name">Last Name:</label>
+          <input
+            type="text"
+            id="last-name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required // Marking field as required
+          />
+        </div>
+        {showError && <p className="error-message">Please fill out this field</p>}
+        <button type="submit">Submit</button>
+      </form>
+      {isSubmitted && (
+        <div className="submitted-info">
+          <p>Full Name: {fullName}</p>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default App
+export default App;
